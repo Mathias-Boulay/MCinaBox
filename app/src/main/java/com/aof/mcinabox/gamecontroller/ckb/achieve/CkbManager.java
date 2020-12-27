@@ -39,7 +39,7 @@ public class CkbManager {
 
     private GameButtonArray<GameButton> buttonList;
 
-    private int buttonMode = GameButton.MODE_MOVEABLE_EDITABLE;
+    private int buttonMode = GameButton.MODE_MOVABLE_EDITABLE;
 
     public CkbManager(@NonNull Context context, @NonNull CallCustomizeKeyboard call, Controller controller) {
         super();
@@ -125,7 +125,7 @@ public class CkbManager {
     }
 
     public boolean setButtonsMode(int mode) {
-        if (mode == GameButton.MODE_GAME || mode == GameButton.MODE_MOVEABLE_EDITABLE || mode == GameButton.MODE_PREVIEW) {
+        if (mode == GameButton.MODE_GAME || mode == GameButton.MODE_MOVABLE_EDITABLE || mode == GameButton.MODE_PREVIEW) {
             for (GameButton g : buttonList) {
                 g.setButtonMode(mode);
             }

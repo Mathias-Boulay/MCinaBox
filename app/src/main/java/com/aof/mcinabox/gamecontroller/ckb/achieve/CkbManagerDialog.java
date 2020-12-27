@@ -217,7 +217,7 @@ public class CkbManagerDialog extends Dialog implements View.OnClickListener, Co
 
         if (buttonView == radioEditable) {
             if (isChecked) {
-                mManager.setButtonsMode(GameButton.MODE_MOVEABLE_EDITABLE);
+                mManager.setButtonsMode(GameButton.MODE_MOVABLE_EDITABLE);
                 buttonAdd.setVisibility(View.VISIBLE);
             }
         }

@@ -31,8 +31,8 @@ public class GameButtonRecorder {
         this.cornerRadius = gb.getCornerRadius();
         this.textColor = gb.getTextColorHex();
         System.arraycopy(gb.getColorHexs(), 0, this.themeColors, 0, CkbThemeRecorder.COLOR_INDEX_LENGTH);
-        this.isKeep = gb.isKeep();
-        this.isHide = gb.isHide();
+        this.isKeep = gb.isKept();
+        this.isHide = gb.isHidden();
         System.arraycopy(gb.getKeyPos(), 0, this.keyPos, 0, 2);
         System.arraycopy(gb.getKeySize(), 0, this.keySize, 0, 2);
         this.alphaSize = gb.getAlphaSize();
@@ -52,8 +52,8 @@ public class GameButtonRecorder {
         for (int a = 0; a < CkbThemeRecorder.COLOR_INDEX_LENGTH; a++) {
             gb.getThemeRecorder().setColors(a, ColorUtils.hex2Int(this.themeColors[a]));
         }
-        gb.setKeep(this.isKeep);
-        gb.setHide(this.isHide);
+        gb.setKept(this.isKeep);
+        gb.setHidden(this.isHide);
         gb.setKeySize(this.keySize[0], this.keySize[1]);
         gb.setKeyPos(this.keyPos[0], this.keyPos[1]);
         gb.setAlphaSize(this.alphaSize);

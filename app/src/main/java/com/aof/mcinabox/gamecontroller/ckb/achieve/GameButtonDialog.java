@@ -208,8 +208,8 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
         seekbarAlpha.setProgress(mGameButton.getAlphaSize() - GameButton.MIN_ALPHA_SIZE_PT);
         seekbarTextSize.setProgress(mGameButton.getTextProgress() - GameButton.MIN_TEXT_SIZE_SP);
         seekbarCornerSize.setProgress(mGameButton.getCornerRadius() - GameButton.MIN_CORNER_SIZE_PT);
-        switchKeep.setChecked(mGameButton.isKeep());
-        switchHide.setChecked(mGameButton.isHide());
+        switchKeep.setChecked(mGameButton.isKept());
+        switchHide.setChecked(mGameButton.isHidden());
         viewBackColorPreview.setBackgroundColor(ColorUtils.hex2Int(mGameButton.getBackColorHex()));
         viewTextColorPreview.setBackgroundColor(ColorUtils.hex2Int(mGameButton.getTextColorHex()));
         switchViewerFollow.setChecked(mGameButton.isViewerFollow());
@@ -377,11 +377,11 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
         if (buttonView == switchKeep) {
-            mGameButton.setKeep(isChecked);
+            mGameButton.setKept(isChecked);
         }
 
         if (buttonView == switchHide) {
-            mGameButton.setHide(isChecked);
+            mGameButton.setHidden(isChecked);
         }
 
         if (buttonView == switchViewerFollow) {
@@ -538,8 +538,8 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
         this.originalAlpha = mGameButton.getAlphaSize();
         this.originalTextSize = mGameButton.getTextProgress();
         this.originalCornerSize = mGameButton.getCornerRadius();
-        this.originalKeep = mGameButton.isKeep();
-        this.originalHide = mGameButton.isHide();
+        this.originalKeep = mGameButton.isKept();
+        this.originalHide = mGameButton.isHidden();
         this.originalViewerFollow = mGameButton.isViewerFollow();
         this.originalShow = mGameButton.getShow();
         this.originalDesignIndex = mGameButton.getDesignIndex();
@@ -555,8 +555,8 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
         mGameButton.setAlphaSize(this.originalAlpha);
         mGameButton.setTextSize(this.originalTextSize);
         mGameButton.setCornerRadius(this.originalCornerSize);
-        mGameButton.setKeep(this.originalKeep);
-        mGameButton.setHide(this.originalHide);
+        mGameButton.setKept(this.originalKeep);
+        mGameButton.setHidden(this.originalHide);
         mGameButton.setShow(this.originalShow);
         mGameButton.setViewerFollow(this.originalViewerFollow);
         mGameButton.setDesignIndex(originalDesignIndex);

@@ -42,7 +42,7 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     private int screenWidth;
     private int screenHeight;
 
-    public final static int MODE_MOVEABLE_EDITABLE = 1;
+    public final static int MODE_MOVABLE_EDITABLE = 1;
     public final static int MODE_PREVIEW = 2;
     public final static int MODE_GAME = 3;
 
@@ -58,7 +58,7 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     public final static int MIN_MOVE_DISTANCE = 10;
 
     public final static int DEFAULT_DESIGN_INDEX = CkbThemeMarker.DESIGN_SIGNLE_FILL;
-    public final static int DEFAULT_BUTTON_MODE = MODE_MOVEABLE_EDITABLE;
+    public final static int DEFAULT_BUTTON_MODE = MODE_MOVABLE_EDITABLE;
     public final static int DEFAULT_KEY_SIZE_DP = 50;
     public final static int DEFAULT_CORNER_SIZE_PT = 20;
     public final static int DEFAULT_ALPHA_SIZE_PT = 30;
@@ -79,8 +79,8 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     private int[] keyTypes; //映射的按键的类型
     private CkbThemeRecorder mRecorder; //主题记录器
 
-    private boolean isKeep;  //自动保持
-    private boolean isHide; //隐藏
+    private boolean isKept;  //自动保持
+    private boolean isHidden; //隐藏
     private float[] keyPos;  // leftPx , topPx
     private float[] keySize;  // widthDp, heightDp
     private int alphaSize; //透明度百分比
@@ -144,7 +144,7 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         this.setKeyMaps(strs);
         this.setKeyTypes(new int[]{KEY_TYPE, KEY_TYPE, KEY_TYPE, KEY_TYPE});
         this.setShow(SHOW_ALL);
-        this.setKeep(false);
+        this.setKept(false);
         this.setViewerFollow(false);
         this.setBackColor(DEFAULT_BACK_COLOR_HEX);
         this.setTextColor(DEFAULT_TEXT_COLOR_HEX);
@@ -188,19 +188,19 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     }
 
     public GameButton setButtonMode(int mode) {
-        if (mode == MODE_GAME || mode == MODE_MOVEABLE_EDITABLE || mode == MODE_PREVIEW) {
+        if (mode == MODE_GAME || mode == MODE_MOVABLE_EDITABLE || mode == MODE_PREVIEW) {
             this.buttonMode = mode;
             updateUI();
         }
         return this;
     }
 
-    public void setKeep(boolean isKeep) {
-        this.isKeep = isKeep;
+    public void setKept(boolean isKeep) {
+        this.isKept = isKeep;
     }
 
-    public void setHide(boolean isHide) {
-        this.isHide = isHide;
+    public void setHidden(boolean isHide) {
+        this.isHidden = isHide;
         //UI刷新
         updateUI();
     }
@@ -333,8 +333,8 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         g.setAlphaSize(this.alphaSize);
         g.setCornerRadius(this.mRecorder.getCornerRadiusPt());
         g.setTextSize(this.textSize);
-        g.setKeep(this.isKeep);
-        g.setHide(this.isHide);
+        g.setKept(this.isKept);
+        g.setHidden(this.isHidden);
         g.setShow(this.show);
         g.setViewerFollow(this.viewerFollow);
         g.setGrabbed(this.isGrabbed);
@@ -414,7 +414,7 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     private void inputKeyEvent(MotionEvent e) {
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if (isKeep) {
+                if (isKept) {
                     if (!isBeingPressed) {
                         for (int a = 0; a < MAX_KEYMAP_SIZE; a++) {
                             if (!keyMaps[a].equals("")) {
@@ -434,7 +434,7 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
                 break;
             case MotionEvent.ACTION_UP:
 
-                if (isKeep) {
+                if (isKept) {
                     if (isBeingPressed) {
                         for (int a = 0; a < MAX_KEYMAP_SIZE; a++) {
                             if (!keyMaps[a].equals("")) {
@@ -537,7 +537,7 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
                     inputKeyEvent(event);
                     break;
                 case MODE_PREVIEW:
-                case MODE_MOVEABLE_EDITABLE:
+                case MODE_MOVABLE_EDITABLE:
                     editView(event);
                     break;
             }
@@ -552,7 +552,7 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         //判断按键的显示/隐藏
         switch (this.buttonMode) {
             case MODE_GAME:
-                if (!isHide) {
+                if (!isHidden) {
                     if (isGrabbed) {
                         if (show == SHOW_ALL || show == SHOW_IN_GAME) {
                             this.setVisibility(VISIBLE);
@@ -571,7 +571,7 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
                 }
                 break;
             case MODE_PREVIEW:
-            case MODE_MOVEABLE_EDITABLE:
+            case MODE_MOVABLE_EDITABLE:
                 if (this.getVisibility() == GONE) {
                     this.setVisibility(VISIBLE);
                 }
@@ -591,8 +591,8 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         return keyMaps;
     }
 
-    public boolean isKeep() {
-        return isKeep;
+    public boolean isKept() {
+        return isKept;
     }
 
     public String getBackColorHex() {
@@ -627,8 +627,8 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         return keyName;
     }
 
-    public boolean isHide() {
-        return isHide;
+    public boolean isHidden() {
+        return isHidden;
     }
 
     public boolean isFirstAdded() {
