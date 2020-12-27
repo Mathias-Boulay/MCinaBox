@@ -57,7 +57,7 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     public final static int MAX_CORNER_SIZE_PT = 100;
     public final static int MIN_MOVE_DISTANCE = 10;
 
-    public final static int DEFAULT_DESIGN_INDEX = CkbThemeMarker.DESIGN_SIGNLE_FILL;
+    public final static int DEFAULT_DESIGN_INDEX = CkbThemeMarker.DESIGN_SINGLE_FILL;
     public final static int DEFAULT_BUTTON_MODE = MODE_MOVABLE_EDITABLE;
     public final static int DEFAULT_KEY_SIZE_DP = 50;
     public final static int DEFAULT_CORNER_SIZE_PT = 20;
@@ -179,12 +179,10 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     }
 
     public String[] setKeyMaps(String keyName, int index) {
-        if (index > MAX_KEYMAP_SIZE || index < 0) {
-            return null;
-        } else {
-            keyMaps[index] = keyName;
-            return keyMaps;
-        }
+        if (index > MAX_KEYMAP_SIZE || index < 0) { return null; }
+        keyMaps[index] = keyName;
+        return keyMaps;
+
     }
 
     public GameButton setButtonMode(int mode) {
@@ -253,9 +251,8 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
             this.requestLayout();
             this.keySize = new float[]{widthDp, heightDp};
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public void setCornerRadius(int radius) {
@@ -276,9 +273,8 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
             this.setText(str);
             this.keyName = str;
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public void setTextSize(int spValue) {
@@ -344,6 +340,15 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
 
     private HashMap<String, Boolean> stateMap;
 
+    private void sendKeys(boolean pressed){
+        for (int a = 0; a < MAX_KEYMAP_SIZE; a++) {
+            if (keyMaps[a].equals("")) {
+                break;
+            }
+            sendKey(keyMaps[a], pressed, keyTypes[a]);
+        }
+    }
+
     private void sendKey(String keyName, boolean pressed, int type) {
 
         //该算法可以保证CustomizeKeyboard不会造成clientinput的setkey()方法堵塞;
@@ -361,14 +366,11 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
             }
             mController.sendKey(new BaseKeyEvent(TAG, keyName, pressed, type, null));
 
-        } else {
-
-            if (stateMap.containsKey(keyName) && stateMap.get(keyName)) {
-                stateMap.remove(keyName);
-                stateMap.put(keyName, pressed);
-                mController.sendKey(new BaseKeyEvent(TAG, keyName, pressed, type, null));
-            }
-
+        }
+        if (stateMap.containsKey(keyName) && stateMap.get(keyName)) {
+            stateMap.remove(keyName);
+            stateMap.put(keyName, pressed);
+            mController.sendKey(new BaseKeyEvent(TAG, keyName, pressed, type, null));
         }
 
     }
@@ -414,44 +416,25 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     private void inputKeyEvent(MotionEvent e) {
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if (isKept) {
-                    if (!isBeingPressed) {
-                        for (int a = 0; a < MAX_KEYMAP_SIZE; a++) {
-                            if (!keyMaps[a].equals("")) {
-                                sendKey(keyMaps[a], true, keyTypes[a]);
-                            }
-                        }
-                    }
-                } else {
-                    for (int a = 0; a < MAX_KEYMAP_SIZE; a++) {
-                        if (!keyMaps[a].equals("")) {
-                            sendKey(keyMaps[a], true, keyTypes[a]);
-                        }
+                if(isKept){
+                    if(isBeingPressed){
+                        break;
                     }
                 }
+
+                sendKeys(true);
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_UP:
-
-                if (isKept) {
-                    if (isBeingPressed) {
-                        for (int a = 0; a < MAX_KEYMAP_SIZE; a++) {
-                            if (!keyMaps[a].equals("")) {
-                                sendKey(keyMaps[a], false, keyTypes[a]);
-                            }
-                        }
-                        isBeingPressed = false;
-                    } else {
-                        isBeingPressed = true;
-                    }
-                } else {
-                    for (int a = 0; a < MAX_KEYMAP_SIZE; a++) {
-                        if (!keyMaps[a].equals("")) {
-                            sendKey(keyMaps[a], false, keyTypes[a]);
-                        }
+                if(isKept){
+                    isBeingPressed = !isBeingPressed;
+                    if(isBeingPressed){
+                        break;
                     }
                 }
+
+                sendKeys(false);
                 break;
             default:
                 break;
@@ -472,39 +455,22 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
                 if (hasDragged) {
                     int tmpTouchPosX = (int) e.getRawX();
                     int tmpTouchPosY = (int) e.getRawY();
-                    int lastPosX = (int) getKeyPos()[0];
-                    int lastPosY = (int) getKeyPos()[1];
-                    int dx = tmpTouchPosX - touchPosX;
-                    int dy = tmpTouchPosY - touchPosY;
                     int viewWidth = getLayoutParams().width;
                     int viewHeight = getLayoutParams().height;
-                    int posLeft = dx + lastPosX;
-                    int posTop = dy + lastPosY;
-                    int posRight = posLeft + viewWidth;
-                    int posBottom = posTop + viewHeight;
-                    int resultX = posLeft;
-                    int resultY = posTop;
+                    int posLeft = (int)(tmpTouchPosX - touchPosX + getKeyPos()[0]);
+                    int posTop = (int)(tmpTouchPosY - touchPosY + getKeyPos()[1]);
 
                     //判断边界
-                    if (posLeft < 0) {
-                        resultX = 0;
-                    }
-                    if (posTop < 0) {
-                        resultY = 0;
-                    }
-                    if (posRight > screenWidth) {
-                        resultX = screenWidth - viewWidth;
-                    }
-                    if (posBottom > screenHeight) {
-                        resultY = screenHeight - viewHeight;
-                    }
+                    posLeft = clamp(posLeft, 0, screenWidth - viewWidth);
+                    posTop = clamp(posTop, 0, screenHeight - viewHeight);
+
                     touchPosX = tmpTouchPosX;
                     touchPosY = tmpTouchPosY;
-                    setKeyPos(resultX, resultY);
-                } else {
-                    if (Math.abs((int) e.getRawX() - touchPosX) >= MIN_MOVE_DISTANCE && Math.abs((int) e.getRawY() - touchPosY) >= MIN_MOVE_DISTANCE) {
-                        hasDragged = true;
-                    }
+                    setKeyPos(posLeft, posTop);
+                    break;
+                }
+                if (Math.abs((int) e.getRawX() - touchPosX) >= MIN_MOVE_DISTANCE && Math.abs((int) e.getRawY() - touchPosY) >= MIN_MOVE_DISTANCE) {
+                    hasDragged = true;
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -552,23 +518,23 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         //判断按键的显示/隐藏
         switch (this.buttonMode) {
             case MODE_GAME:
-                if (!isHidden) {
-                    if (isGrabbed) {
-                        if (show == SHOW_ALL || show == SHOW_IN_GAME) {
-                            this.setVisibility(VISIBLE);
-                        } else {
-                            this.setVisibility(GONE);
-                        }
-                    } else {
-                        if (show == SHOW_ALL || show == SHOW_OUT_GAME) {
-                            this.setVisibility(VISIBLE);
-                        } else {
-                            this.setVisibility(GONE);
-                        }
+
+                if (isHidden) {
+                    this.setVisibility(GONE);
+                    break;
+                }
+                if (isGrabbed) {
+                    if (show == SHOW_ALL || show == SHOW_IN_GAME) {
+                        this.setVisibility(VISIBLE);
+                        break;
                     }
                 } else {
-                    this.setVisibility(GONE);
+                    if (show == SHOW_ALL || show == SHOW_OUT_GAME) {
+                        this.setVisibility(VISIBLE);
+                        break;
+                    }
                 }
+                this.setVisibility(GONE);
                 break;
             case MODE_PREVIEW:
             case MODE_MOVABLE_EDITABLE:
@@ -581,8 +547,7 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         this.setBackground(CkbThemeMarker.getDesign(mRecorder));
     }
 
-    //getter
-
+    //Getter functions
     public int getButtonMode() {
         return buttonMode;
     }
