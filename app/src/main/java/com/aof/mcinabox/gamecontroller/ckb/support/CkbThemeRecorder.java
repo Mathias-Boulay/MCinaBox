@@ -37,11 +37,7 @@ public class CkbThemeRecorder {
     }
 
     public int getColor(int index) {
-        if (index >= 0 && index < COLOR_INDEX_LENGTH) {
-            return themeColors[index];
-        } else {
-            return 0;
-        }
+        return (index >= 0 && index < COLOR_INDEX_LENGTH) ? themeColors[index] : 0;
     }
 
     public int[] getColors() {
