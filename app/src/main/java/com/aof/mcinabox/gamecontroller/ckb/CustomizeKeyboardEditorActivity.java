@@ -61,7 +61,7 @@ public class CustomizeKeyboardEditorActivity extends AppCompatActivity implement
         mDialog = new CkbManagerDialog(this, mManager);
 
         //配置悬浮按钮
-        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(this, 30), DisplayUtils.getPxFromDp(this, 30));
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(30), DisplayUtils.getPxFromDp(30));
         this.addContentView(dButton, lp);
         dButton.setBackground(ContextCompat.getDrawable(this, R.drawable.background_floatbutton));
         dButton.setTodo(new ArrangeRule() {

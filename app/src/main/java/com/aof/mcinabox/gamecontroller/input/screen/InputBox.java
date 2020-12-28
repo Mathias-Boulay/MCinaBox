@@ -175,7 +175,7 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
         screenHeight = context.getResources().getDisplayMetrics().heightPixels;
 
         inputBox = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.virtual_inputbox, null);
-        controller.addContentView(inputBox, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(mContext, widthDp), DisplayUtils.getPxFromDp(mContext, heightDp)));
+        controller.addContentView(inputBox, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(widthDp), DisplayUtils.getPxFromDp(heightDp)));
 
         buttonFromSoft = inputBox.findViewById(R.id.onscreen_inputbox_button_input);
         buttonFromPre = inputBox.findViewById(R.id.onscreen_inputbox_button_quick);

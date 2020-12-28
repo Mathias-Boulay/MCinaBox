@@ -153,7 +153,7 @@ public class VirtualController extends BaseController implements View.OnClickLis
 
         //添加悬浮配置按钮
         dButton = new DragFloatActionButton(client.getActivity());
-        dButton.setLayoutParams(new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(client.getActivity(), 30), DisplayUtils.getPxFromDp(client.getActivity(), 30)));
+        dButton.setLayoutParams(new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(30), DisplayUtils.getPxFromDp(30)));
         dButton.setBackground(ContextCompat.getDrawable(client.getActivity(), R.drawable.background_floatbutton));
         dButton.setTodo(new ArrangeRule() {
             @Override

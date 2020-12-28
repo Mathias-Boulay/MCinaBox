@@ -70,7 +70,7 @@ public class OnscreenKeyboard implements OnscreenInput {
         screenHeight = context.getResources().getDisplayMetrics().heightPixels;
 
         onscreenKeyboard = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.virtual_keyboard, null);
-        mController.addContentView(onscreenKeyboard, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(mContext, widthDp), DisplayUtils.getPxFromDp(mContext, heightDp)));
+        mController.addContentView(onscreenKeyboard, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(widthDp), DisplayUtils.getPxFromDp(heightDp)));
 
         //设置监听器
         for (int a = 0; a < onscreenKeyboard.getChildCount(); a++) {

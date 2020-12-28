@@ -96,7 +96,7 @@ public class OnscreenMouse implements OnscreenInput {
         screenHeight = context.getResources().getDisplayMetrics().heightPixels;
 
         onscreenMouse = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.virtual_mouse, null);
-        mController.addContentView(onscreenMouse, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(mContext, widthDp), DisplayUtils.getPxFromDp(mContext, heightDp)));
+        mController.addContentView(onscreenMouse, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(widthDp), DisplayUtils.getPxFromDp(heightDp)));
 
         mouseButton_pri = onscreenMouse.findViewById(R.id.onscreen_mouse_pri);
         mouseButton_sec = onscreenMouse.findViewById(R.id.onscreen_mouse_sec);

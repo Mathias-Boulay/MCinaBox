@@ -71,10 +71,10 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
         screenHeight = context.getResources().getDisplayMetrics().heightPixels;
 
         crossKeyboard = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.virtual_crosskey, null);
-        controller.addContentView(crossKeyboard, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(mContext, widthDp), DisplayUtils.getPxFromDp(mContext, heightDp)));
+        controller.addContentView(crossKeyboard, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(widthDp), DisplayUtils.getPxFromDp(heightDp)));
 
         crossKeyBoardExtend = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.virtual_crosskey_extend, null);
-        controller.addContentView(crossKeyBoardExtend, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(mContext, extra_widthDp), DisplayUtils.getPxFromDp(mContext, extra_heightDp)));
+        controller.addContentView(crossKeyBoardExtend, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(extra_widthDp), DisplayUtils.getPxFromDp(extra_heightDp)));
 
 
         crosskeyChildren = new CrossButton[]{crossKeyboard.findViewById(R.id.crosskey_up_left), crossKeyboard.findViewById(R.id.crosskey_up), crossKeyboard.findViewById(R.id.crosskey_up_right), crossKeyboard.findViewById(R.id.crosskey_left), crossKeyboard.findViewById(R.id.crosskey_shift), crossKeyboard.findViewById(R.id.crosskey_right), crossKeyboard.findViewById(R.id.crosskey_down_left), crossKeyboard.findViewById(R.id.crosskey_down), crossKeyboard.findViewById(R.id.crosskey_down_right), crossKeyBoardExtend.findViewById(R.id.crosskey_bounce)};

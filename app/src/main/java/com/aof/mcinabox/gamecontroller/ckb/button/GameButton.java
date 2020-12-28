@@ -242,8 +242,8 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
 
     //按键大小用Dp表示
     public boolean setKeySize(float widthDp, float heightDp) {
-        int widthPx = DisplayUtils.getPxFromDp(mContext, widthDp);
-        int heightPx = DisplayUtils.getPxFromDp(mContext, heightDp);
+        int widthPx = DisplayUtils.getPxFromDp(widthDp);
+        int heightPx = DisplayUtils.getPxFromDp(heightDp);
         if ((widthDp <= MAX_KEY_SIZE_DP && heightDp <= MAX_KEY_SIZE_DP) && (widthDp >= MIN_KEY_SIZE_DP && heightDp >= MIN_KEY_SIZE_DP)) {
             ViewGroup.LayoutParams params = this.getLayoutParams();
             params.width = widthPx;
@@ -280,7 +280,7 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     public void setTextSize(int spValue) {
         spValue = clamp(spValue, MIN_TEXT_SIZE_SP, MAX_TEXT_SIZE_SP);
 
-        this.setTextSize((float) DisplayUtils.getPxFromSp(mContext, spValue));
+        this.setTextSize((float) DisplayUtils.getPxFromSp(spValue));
         this.textSize = spValue;
     }
 

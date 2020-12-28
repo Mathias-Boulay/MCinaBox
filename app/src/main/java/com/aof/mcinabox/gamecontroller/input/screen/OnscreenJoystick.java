@@ -174,7 +174,7 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
         screenHeight = context.getResources().getDisplayMetrics().heightPixels;
 
         onscreenJoystick = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.virtual_joystick, null);
-        mController.addContentView(onscreenJoystick, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(mContext, widthDp), DisplayUtils.getPxFromDp(mContext, heightDp)));
+        mController.addContentView(onscreenJoystick, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(widthDp), DisplayUtils.getPxFromDp(heightDp)));
 
         joystick = onscreenJoystick.findViewById(R.id.joystick_rocker);
         buttonMove = onscreenJoystick.findViewById(R.id.joystick_move);

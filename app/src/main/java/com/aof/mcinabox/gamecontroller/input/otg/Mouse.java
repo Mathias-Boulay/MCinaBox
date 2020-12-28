@@ -71,7 +71,7 @@ public class Mouse implements HwInput {
         }
         //添加鼠标图标
         cursor = new ImageView(mContext);
-        cursor.setLayoutParams(new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(mContext, CURSOR_SIZE), DisplayUtils.getPxFromDp(mContext, CURSOR_SIZE)));
+        cursor.setLayoutParams(new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(CURSOR_SIZE), DisplayUtils.getPxFromDp(CURSOR_SIZE)));
         cursor.setImageResource(R.drawable.cursor);
         mController.getClient().addView(cursor);
 
