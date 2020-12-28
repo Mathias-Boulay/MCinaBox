@@ -161,8 +161,8 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
         this.buttonCopy = findViewById(R.id.gamebutton_config_dialog_button_copy);
 
         //设定控件属性
-        seekbarAlpha.setMax(GameButton.MAX_ALPHA_SIZE_PT);
-        seekbarCornerSize.setMax(GameButton.MAX_CORNER_SIZE_PT);
+        seekbarAlpha.setMax(GameButton.MAX_OPACITY);
+        seekbarCornerSize.setMax(GameButton.MAX_CORNER_SIZE_PX);
         seekbarTextSize.setMax(GameButton.MAX_TEXT_SIZE_SP);
         spinnerDesign.setAdapter(new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_item, Arrays.asList(CkbThemeMarker.DESIGNS)));
 
@@ -205,9 +205,9 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
         textMap4.setText(mGameButton.getKeyMaps()[3]);
         editBackColor.setText(mGameButton.getBackColorHex());
         editTextColor.setText(mGameButton.getTextColorHex());
-        seekbarAlpha.setProgress(mGameButton.getAlphaSize() - GameButton.MIN_ALPHA_SIZE_PT);
+        seekbarAlpha.setProgress(mGameButton.getOpacity() - GameButton.MIN_OPACITY);
         seekbarTextSize.setProgress(mGameButton.getTextProgress() - GameButton.MIN_TEXT_SIZE_SP);
-        seekbarCornerSize.setProgress(mGameButton.getCornerRadius() - GameButton.MIN_CORNER_SIZE_PT);
+        seekbarCornerSize.setProgress(mGameButton.getCornerRadius() - GameButton.MIN_CORNER_SIZE_PX);
         switchKeep.setChecked(mGameButton.isKept());
         switchHide.setChecked(mGameButton.isHidden());
         viewBackColorPreview.setBackgroundColor(ColorUtils.hex2Int(mGameButton.getBackColorHex()));
@@ -412,13 +412,13 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
         if (seekBar == this.seekbarAlpha) {
-            int a = seekBar.getProgress() + GameButton.MIN_ALPHA_SIZE_PT;
+            int a = seekBar.getProgress() + GameButton.MIN_OPACITY;
             textAlpha.setText(String.valueOf(a));
-            mGameButton.setAlphaSize(a);
+            mGameButton.setOpacity(a);
         }
 
         if (seekBar == this.seekbarCornerSize) {
-            int a = seekBar.getProgress() + GameButton.MIN_CORNER_SIZE_PT;
+            int a = seekBar.getProgress() + GameButton.MIN_CORNER_SIZE_PX;
             textCornerSize.setText(String.valueOf(a));
             mGameButton.setCornerRadius(a);
         }
@@ -535,7 +535,7 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
         this.originalMaps = mGameButton.getKeyMaps();
         this.originalBackColorHex = mGameButton.getBackColorHex();
         this.originalTextColorHex = mGameButton.getTextColorHex();
-        this.originalAlpha = mGameButton.getAlphaSize();
+        this.originalAlpha = mGameButton.getOpacity();
         this.originalTextSize = mGameButton.getTextProgress();
         this.originalCornerSize = mGameButton.getCornerRadius();
         this.originalKeep = mGameButton.isKept();
@@ -552,7 +552,7 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
         mGameButton.setKeyMaps(this.originalMaps);
         mGameButton.setBackColor(this.originalBackColorHex);
         mGameButton.setTextColor(this.originalTextColorHex);
-        mGameButton.setAlphaSize(this.originalAlpha);
+        mGameButton.setOpacity(this.originalAlpha);
         mGameButton.setTextSize(this.originalTextSize);
         mGameButton.setCornerRadius(this.originalCornerSize);
         mGameButton.setKept(this.originalKeep);

@@ -6,13 +6,14 @@ import com.aof.mcinabox.gamecontroller.ckb.achieve.CkbManager;
 import com.aof.mcinabox.gamecontroller.ckb.button.GameButton;
 import com.aof.mcinabox.gamecontroller.controller.Controller;
 import com.aof.mcinabox.utils.ColorUtils;
+import com.aof.mcinabox.utils.DisplayUtils;
 
 public class GameButtonRecorder {
     public String[] keyMaps = new String[GameButton.MAX_KEYMAP_SIZE];
     public int[] keyTypes = new int[GameButton.MAX_KEYMAP_SIZE];
     public int show;
     public int designIndex;
-    public int cornerRadius;
+    public float cornerRadius;
     public String textColor;
     public String[] themeColors = new String[CkbThemeRecorder.COLOR_INDEX_LENGTH];
     public boolean isKeep;
@@ -28,14 +29,17 @@ public class GameButtonRecorder {
         System.arraycopy(gb.getKeyMaps(), 0, this.keyMaps, 0, GameButton.MAX_KEYMAP_SIZE);
         System.arraycopy(gb.getKeyTypes(), 0, this.keyTypes, 0, GameButton.MAX_KEYMAP_SIZE);
         this.designIndex = gb.getDesignIndex();
-        this.cornerRadius = gb.getCornerRadius();
+        this.cornerRadius = DisplayUtils.getDpFromPx(gb.getCornerRadius());
         this.textColor = gb.getTextColorHex();
         System.arraycopy(gb.getColorHexs(), 0, this.themeColors, 0, CkbThemeRecorder.COLOR_INDEX_LENGTH);
         this.isKeep = gb.isKept();
         this.isHide = gb.isHidden();
-        System.arraycopy(gb.getKeyPos(), 0, this.keyPos, 0, 2);
+
+        this.keyPos[0] = DisplayUtils.getPercentageFromPx(gb.getKeyPos()[0], true);
+        this.keyPos[1] = DisplayUtils.getPercentageFromPx(gb.getKeyPos()[1], false);
         System.arraycopy(gb.getKeySize(), 0, this.keySize, 0, 2);
-        this.alphaSize = gb.getAlphaSize();
+
+        this.alphaSize = gb.getOpacity();
         this.keyName = gb.getKeyName();
         this.isViewerFollow = gb.isViewerFollow();
         this.show = gb.getShow();
@@ -47,7 +51,9 @@ public class GameButtonRecorder {
         gb.setKeyMaps(this.keyMaps);
         gb.setKeyTypes(this.keyTypes);
         gb.setDesignIndex(this.designIndex);
-        gb.setCornerRadius(this.cornerRadius);
+
+        gb.setCornerRadius(DisplayUtils.getPxFromDp(this.cornerRadius));
+
         gb.setTextColor(this.textColor);
         for (int a = 0; a < CkbThemeRecorder.COLOR_INDEX_LENGTH; a++) {
             gb.getThemeRecorder().setColors(a, ColorUtils.hex2Int(this.themeColors[a]));
@@ -55,8 +61,8 @@ public class GameButtonRecorder {
         gb.setKept(this.isKeep);
         gb.setHidden(this.isHide);
         gb.setKeySize(this.keySize[0], this.keySize[1]);
-        gb.setKeyPos(this.keyPos[0], this.keyPos[1]);
-        gb.setAlphaSize(this.alphaSize);
+        gb.setKeyPos(DisplayUtils.getPxFromPercentage(this.keyPos[0], true),DisplayUtils.getPxFromPercentage(this.keyPos[1], false));
+        gb.setOpacity(this.alphaSize);
         gb.setKeyName(this.keyName);
         gb.setTextSize(this.textSize);
         gb.setViewerFollow(this.isViewerFollow);

@@ -51,17 +51,17 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     public final static int MIN_KEY_SIZE_DP = 20;
     public final static int MIN_TEXT_SIZE_SP = 2;
     public final static int MAX_TEXT_SIZE_SP = 20;
-    public final static int MIN_ALPHA_SIZE_PT = 0;
-    public final static int MAX_ALPHA_SIZE_PT = 100;
-    public final static int MIN_CORNER_SIZE_PT = 0;
-    public final static int MAX_CORNER_SIZE_PT = 100;
+    public final static int MIN_OPACITY = 0;
+    public final static int MAX_OPACITY = 100;
+    public final static int MIN_CORNER_SIZE_PX = 0;
+    public final static int MAX_CORNER_SIZE_PX = 100;
     public final static int MIN_MOVE_DISTANCE = 10;
 
     public final static int DEFAULT_DESIGN_INDEX = CkbThemeMarker.DESIGN_SINGLE_FILL;
     public final static int DEFAULT_BUTTON_MODE = MODE_MOVABLE_EDITABLE;
     public final static int DEFAULT_KEY_SIZE_DP = 50;
-    public final static int DEFAULT_CORNER_SIZE_PT = 20;
-    public final static int DEFAULT_ALPHA_SIZE_PT = 30;
+    public final static int DEFAULT_CORNER_SIZE_PX = 20;
+    public final static int DEFAULT_OPACITY = 30;
     public final static int DEFAULT_TEXT_SIZE_SP = 5;
     public final static String DEFAULT_BACK_COLOR_HEX = "#000000";
     public final static String DEFAULT_TEXT_COLOR_HEX = "#FFFFFF";
@@ -83,7 +83,7 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     private boolean isHidden; //隐藏
     private float[] keyPos;  // leftPx , topPx
     private float[] keySize;  // widthDp, heightDp
-    private int alphaSize; //透明度百分比
+    private int opacity; //透明度百分比
     private String keyName; //按键名
     private int textSize; //字体大小
     private boolean viewerFollow; //视角跟随
@@ -150,8 +150,8 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         this.setTextColor(DEFAULT_TEXT_COLOR_HEX);
         this.setKeyPos(0, 0);
         this.setKeySize(DEFAULT_KEY_SIZE_DP, DEFAULT_KEY_SIZE_DP);
-        this.setCornerRadius(DEFAULT_CORNER_SIZE_PT);
-        this.setAlphaSize(DEFAULT_ALPHA_SIZE_PT);
+        this.setCornerRadius(DEFAULT_CORNER_SIZE_PX);
+        this.setOpacity(DEFAULT_OPACITY);
         this.setDesignIndex(DEFAULT_DESIGN_INDEX);
 
     }
@@ -256,16 +256,16 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     }
 
     public void setCornerRadius(int radius) {
-        radius = clamp(radius, MIN_CORNER_SIZE_PT, MAX_CORNER_SIZE_PT);
+        radius = clamp(radius, MIN_CORNER_SIZE_PX, MAX_CORNER_SIZE_PX);
         this.mRecorder.setCornerRadiusPt(radius);
         updateUI();
     }
 
-    public void setAlphaSize(int alphaPt) {
-        alphaPt = clamp(alphaPt, MIN_ALPHA_SIZE_PT, MAX_ALPHA_SIZE_PT);
+    public void setOpacity(int opacity) {
+        opacity = clamp(opacity, MIN_OPACITY, MAX_OPACITY);
 
-        this.setAlpha(alphaPt * 0.01f);
-        this.alphaSize = alphaPt;
+        this.setAlpha(opacity * 0.01f);
+        this.opacity = opacity;
     }
 
     public boolean setKeyName(String str) {
@@ -326,7 +326,7 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         g.setKeyTypes(this.keyTypes);
         g.setBackColor(ColorUtils.int2Hex(mRecorder.getColor(0)));
         g.setTextColor(ColorUtils.int2Hex(mRecorder.getTextColor()));
-        g.setAlphaSize(this.alphaSize);
+        g.setOpacity(this.opacity);
         g.setCornerRadius(this.mRecorder.getCornerRadiusPt());
         g.setTextSize(this.textSize);
         g.setKept(this.isKept);
@@ -584,8 +584,8 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         return mRecorder.getCornerRadiusPt();
     }
 
-    public int getAlphaSize() {
-        return alphaSize;
+    public int getOpacity() {
+        return opacity;
     }
 
     public String getKeyName() {
