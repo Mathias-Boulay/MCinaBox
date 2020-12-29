@@ -208,80 +208,11 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
          *  |7|8|9|
          * --------
          */
-        int location; //九宫格位置标志 失去焦点时为 0
+        int location = 0; //九宫格位置标志 失去焦点时为 0
         //自左向右，第一列
-        if (shiftPos[0] < buttonWidth && shiftPos[0] >= 0) {
-
-            if (shiftPos[1] < buttonheight && shiftPos[1] >= 0) {
-
-                location = 1;
-                //左上按钮被按下
-
-            } else if (shiftPos[1] <= buttonheight * 2 && shiftPos[1] >= buttonheight) {
-
-                location = 4;
-                //左中按钮被按下
-
-            } else if (shiftPos[1] > buttonheight * 2 && shiftPos[1] <= buttonheight * 3) {
-
-                location = 7;
-                //左下按钮被按下
-
-            } else {
-                //这种情况下触摸焦点已经不在CrossKey上
-                location = 0;
-
-            }
-
-            //第二列
-        } else if (shiftPos[0] <= buttonWidth * 2 && shiftPos[0] >= buttonWidth) {
-
-            if (shiftPos[1] < buttonheight && shiftPos[1] >= 0) {
-
-                location = 2;
-                //上按钮被按下
-
-            } else if (shiftPos[1] <= buttonheight * 2 && shiftPos[1] >= buttonheight) {
-
-                location = 5;
-                //中按钮被按下
-
-            } else if (shiftPos[1] > buttonheight * 2 && shiftPos[1] <= buttonheight * 3) {
-
-                location = 8;
-                //下按钮被按下
-
-            } else {
-                //这种情况下触摸焦点已经不在CrossKey上
-                location = 0;
-            }
-
-            //第三列
-        } else if (shiftPos[0] > buttonWidth * 2 && shiftPos[0] <= buttonWidth * 3) {
-
-            if (shiftPos[1] < buttonheight && shiftPos[1] >= 0) {
-
-                location = 3;
-                //右下按钮被按下
-
-            } else if (shiftPos[1] <= buttonheight * 2 && shiftPos[1] >= buttonheight) {
-
-                location = 6;
-                //右中按钮被按下
-
-            } else if (shiftPos[1] > buttonheight * 2 && shiftPos[1] <= buttonheight * 3) {
-
-                location = 9;
-                //右下按钮被按下
-
-            } else {
-                //这种情况下触摸焦点已经不在CrossKey上
-                location = 0;
-
-            }
-
-        } else {
-            location = 0;
+        if((touchPos[0] >= boardPos[0] && touchPos[0] < boardPos[0] + buttonWidth*3) && (touchPos[1] >= boardPos[1] && touchPos[1] < boardPos[1] + buttonHeight*3)){
+            location += (shiftPos[1]/buttonHeight)*3; //Y axis
+            location += (shiftPos[0]/buttonWidth)+1;  //X axis
         }
 
         uiUpdate(location, e);
