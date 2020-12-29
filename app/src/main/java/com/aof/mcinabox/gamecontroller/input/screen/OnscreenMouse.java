@@ -239,7 +239,7 @@ public class OnscreenMouse implements OnscreenInput {
     }
 
     @Override
-    public int getUiVisiability() {
+    public int getUiVisibility() {
         return onscreenMouse.getVisibility();
     }
 
@@ -609,7 +609,7 @@ public class OnscreenMouse implements OnscreenInput {
             editor.putInt(sp_alpha_name, seekbarAlpha.getProgress());
             editor.putInt(sp_size_name, seekbarSize.getProgress());
             editor.putInt(sp_wheel_speed_name, seekbarWheelSpeed.getProgress());
-            if (mInput.getUiVisiability() == View.VISIBLE) {
+            if (mInput.getUiVisibility() == View.VISIBLE) {
                 editor.putInt(sp_pos_x_name, (int) mInput.getPos()[0]);
                 editor.putInt(sp_pos_y_name, (int) mInput.getPos()[1]);
             }

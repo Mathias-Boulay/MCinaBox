@@ -111,7 +111,7 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
     }
 
     @Override
-    public int getUiVisiability() {
+    public int getUiVisibility() {
         return inputBox.getVisibility();
     }
 
@@ -714,7 +714,7 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
             SharedPreferences.Editor editor = mContext.getSharedPreferences(spFileName, spMode).edit();
             editor.putInt(sp_alpha_name, seekbarAlpha.getProgress());
             editor.putInt(sp_size_name, seekbarSize.getProgress());
-            if (mInput.getUiVisiability() == View.VISIBLE) {
+            if (mInput.getUiVisibility() == View.VISIBLE) {
                 editor.putInt(sp_pos_x_name, (int) mInput.getPos()[0]);
                 editor.putInt(sp_pos_y_name, (int) mInput.getPos()[1]);
             }

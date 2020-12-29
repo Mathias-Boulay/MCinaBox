@@ -172,7 +172,7 @@ public class CustomizeKeyboard implements OnscreenInput, Controller, CallCustomi
     }
 
     @Override
-    public int getUiVisiability() {
+    public int getUiVisibility() {
         return View.VISIBLE;
     }
 

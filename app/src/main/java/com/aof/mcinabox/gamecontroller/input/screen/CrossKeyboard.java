@@ -129,24 +129,24 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
     }
 
     @Override
-    public void setUiVisibility(int visiablity) {
+    public void setUiVisibility(int visibility) {
 
         SharedPreferences sp = mContext.getSharedPreferences(spFileName, spMode);
 
-        switch (visiablity) {
+        switch (visibility) {
             case View.GONE:
             case View.INVISIBLE:
-                crossKeyBoardExtend.setVisibility(visiablity);
+                crossKeyBoardExtend.setVisibility(visibility);
                 break;
             case View.VISIBLE:
                 if (sp.getBoolean(sp_switch_bounce_name, false)) {
-                    crossKeyBoardExtend.setVisibility(visiablity);
+                    crossKeyBoardExtend.setVisibility(visibility);
                 }
                 break;
             default:
                 break;
         }
-        crossKeyboard.setVisibility(visiablity);
+        crossKeyboard.setVisibility(visibility);
     }
 
     @Override
@@ -182,7 +182,7 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
     }
 
     @Override
-    public int getUiVisiability() {
+    public int getUiVisibility() {
         return crossKeyboard.getVisibility();
     }
 
@@ -191,7 +191,7 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
         int[] touchPos = new int[2];  //触摸位置的坐标
         int[] shiftPos = new int[2];  //触摸位置相对于CrossKey左上角的偏移量
         int buttonWidth = v.getWidth();  //按键宽度
-        int buttonheight = v.getHeight();  //按键高度
+        int buttonHeight = v.getHeight();  //按键高度
 
         crossKeyboard.getLocationOnScreen(boardPos);
         touchPos[0] = (int) e.getRawX();
@@ -221,7 +221,7 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
 
     }
 
-    private CrossButton[] visiableButtons = new CrossButton[]{};
+    private CrossButton[] visibleButtons = new CrossButton[]{};
 
     private void uiUpdate(int location, MotionEvent e) {
 
@@ -244,26 +244,26 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
                 group = new CrossButton[]{};
                 break;
             default:
-                group = visiableButtons;
+                group = visibleButtons;
                 break;
         }
 
-        if (!Arrays.equals(visiableButtons, group)) {
+        if (!Arrays.equals(visibleButtons, group)) {
             // to do nothing.
-            for (View v : visiableButtons) {
+            for (View v : visibleButtons) {
                 v.setVisibility(View.INVISIBLE);
             }
             for (View v : group) {
                 v.setVisibility(View.VISIBLE);
             }
-            visiableButtons = group;
+            visibleButtons = group;
         }
 
         if (e.getAction() == MotionEvent.ACTION_UP) {
-            for (View v : visiableButtons) {
+            for (View v : visibleButtons) {
                 v.setVisibility(View.INVISIBLE);
             }
-            visiableButtons = new CrossButton[]{};
+            visibleButtons = new CrossButton[]{};
         }
 
     }
@@ -701,7 +701,7 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
             editor.putInt(sp_alpha_name, seekbarAlpha.getProgress());
             editor.putInt(sp_size_name, seekbarSize.getProgress());
             editor.putBoolean(sp_switch_bounce_name, switchBounce.isChecked());
-            if (mInput.getUiVisiability() == View.VISIBLE) {
+            if (mInput.getUiVisibility() == View.VISIBLE) {
                 editor.putInt(sp_pos_x_name, (int) mInput.getPos()[0]);
                 editor.putInt(sp_pos_y_name, (int) mInput.getPos()[1]);
             }

@@ -326,7 +326,7 @@ public class OnscreenTouchpad implements OnscreenInput, KeyMap, MouseMap {
     }
 
     @Override
-    public int getUiVisiability() {
+    public int getUiVisibility() {
         return onscreenTouchpad.getVisibility();
     }
 

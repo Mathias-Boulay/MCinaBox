@@ -15,5 +15,5 @@ public interface OnscreenInput extends Input, View.OnTouchListener {
 
     View[] getViews();
 
-    int getUiVisiability();
+    int getUiVisibility();
 }

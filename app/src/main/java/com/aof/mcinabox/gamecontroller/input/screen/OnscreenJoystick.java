@@ -105,7 +105,7 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
     }
 
     @Override
-    public int getUiVisiability() {
+    public int getUiVisibility() {
         return onscreenJoystick.getVisibility();
     }
 
@@ -521,7 +521,7 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
             SharedPreferences.Editor editor = mContext.getSharedPreferences(spFileName, spMode).edit();
             editor.putInt(sp_alpha_name, seekbarAlpha.getProgress());
             editor.putInt(sp_size_name, seekbarSize.getProgress());
-            if (mInput.getUiVisiability() == View.VISIBLE) {
+            if (mInput.getUiVisibility() == View.VISIBLE) {
                 editor.putInt(sp_pos_x_name, (int) mInput.getPos()[0]);
                 editor.putInt(sp_pos_y_name, (int) mInput.getPos()[1]);
             }
