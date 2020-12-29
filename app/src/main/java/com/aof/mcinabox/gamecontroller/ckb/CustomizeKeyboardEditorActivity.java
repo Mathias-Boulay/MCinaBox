@@ -140,13 +140,11 @@ public class CustomizeKeyboardEditorActivity extends AppCompatActivity implement
         if (view.getLayoutParams() == null) {
             return;
         }
-        if (view.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
-            this.mLayout_main.addView(view);
-        } else {
+        if (!(view.getLayoutParams() instanceof RelativeLayout.LayoutParams)) {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(view.getLayoutParams().width, view.getLayoutParams().height);
             view.setLayoutParams(params);
-            this.mLayout_main.addView(view);
         }
+        this.mLayout_main.addView(view);
     }
 
     @Override
@@ -239,19 +237,17 @@ public class CustomizeKeyboardEditorActivity extends AppCompatActivity implement
         }
 
         private void moveHide(int rawX) {
+            ObjectAnimator oa;
             if (rawX >= parentWidth / 2) {
                 //靠右吸附
-                ObjectAnimator oa = ObjectAnimator.ofFloat(this, "x", getX(), parentWidth - getWidth());
-                oa.setInterpolator(new DecelerateInterpolator());
-                oa.setDuration(500);
-                oa.start();
+                oa = ObjectAnimator.ofFloat(this, "x", getX(), parentWidth - getWidth());
             } else {
                 //靠左吸附
-                ObjectAnimator oa = ObjectAnimator.ofFloat(this, "x", getX(), 0);
-                oa.setInterpolator(new DecelerateInterpolator());
-                oa.setDuration(500);
-                oa.start();
+                oa = ObjectAnimator.ofFloat(this, "x", getX(), 0);
             }
+            oa.setInterpolator(new DecelerateInterpolator());
+            oa.setDuration(500);
+            oa.start();
         }
 
         @Override

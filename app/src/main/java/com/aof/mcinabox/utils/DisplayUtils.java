@@ -28,8 +28,8 @@ public class DisplayUtils {
         return (pxValue*100/(isWidth ? Resources.getSystem().getDisplayMetrics().widthPixels : Resources.getSystem().getDisplayMetrics().heightPixels));
     }
 
-    public static float getPxFromPercentage(float percentageValue, boolean isWidth){
-        return (percentageValue*(isWidth ? Resources.getSystem().getDisplayMetrics().widthPixels : Resources.getSystem().getDisplayMetrics().heightPixels)/100);
+    public static int getPxFromPercentage(float percentageValue, boolean isWidth){
+        return (int)((percentageValue*(isWidth ? Resources.getSystem().getDisplayMetrics().widthPixels : Resources.getSystem().getDisplayMetrics().heightPixels)/100) + 0.5f);
     }
 
 
