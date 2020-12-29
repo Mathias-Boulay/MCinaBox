@@ -32,6 +32,7 @@ import com.aof.mcinabox.utils.dialog.support.DialogSupports;
 
 import java.util.Arrays;
 
+import static androidx.core.math.MathUtils.clamp;
 import static com.aof.mcinabox.gamecontroller.definitions.id.key.KeyEvent.KEYBOARD_BUTTON;
 import static com.aof.mcinabox.gamecontroller.definitions.id.key.KeyEvent.MARK_KEYNAME_SPLIT_STRING;
 
@@ -432,19 +433,16 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
             if (mController.getGrabbed()) {
                 if (show == SHOW_ALL || show == SHOW_IN_GAME) {
                     this.setUiVisibility(View.VISIBLE);
-                } else {
-                    this.setUiVisibility(View.GONE);
+                    return;
                 }
             } else {
                 if (show == SHOW_ALL || show == SHOW_OUT_GAME) {
                     this.setUiVisibility(View.VISIBLE);
-                } else {
-                    this.setUiVisibility(View.GONE);
+                    return;
                 }
             }
-        } else {
-            setUiVisibility(View.GONE);
         }
+        setUiVisibility(View.GONE);
     }
 
     public void setShowStat(int s) {
@@ -648,26 +646,13 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
             int viewWidth = mInput.getSize()[0];
             int viewHeight = mInput.getSize()[1];
             int marginLeft = originalCenterX - viewWidth / 2;
-            int margeinTop = originalCenterY - viewHeight / 2;
+            int marginTop = originalCenterY - viewHeight / 2;
 
-            //左边界检测
-            if (marginLeft < 0) {
-                marginLeft = 0;
-            }
-            //上边界检测
-            if (margeinTop < 0) {
-                margeinTop = 0;
-            }
-            //右边界检测
-            if (marginLeft + viewWidth > screenWidth) {
-                marginLeft = screenWidth - viewWidth;
-            }
-            //下边界检测
-            if (margeinTop + viewHeight > screenHeight) {
-                margeinTop = screenHeight - viewHeight;
-            }
+            //defining boundaries
+            marginLeft = clamp(marginLeft, 0, screenWidth - viewWidth);
+            marginTop = clamp(marginTop, 0, screenHeight - viewHeight);
 
-            mInput.setMargins(marginLeft, margeinTop, 0, 0);
+            mInput.setMargins(marginLeft, marginTop, 0, 0);
         }
 
         private void loadConfigFromFile() {
